@@ -1,0 +1,2097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroAI Diagnostic Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: #4895ef;
+            --primary-dark: #3a0ca3;
+            --secondary: #7209b7;
+            --accent: #f72585;
+            --accent-light: #f8a4c4;
+            --success: #4cc9f0;
+            --warning: #f72585;
+            --info: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-400: #ced4da;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --gray-800: #343a40;
+            --gray-900: #212529;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: #f0f2f5;
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+ge
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            transition: all 0.5s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo i {
+            color: var(--success);
+            font-size: 1.8rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1.2rem;
+            border-radius: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.5s ease;
+            transform: skewX(-30deg);
+        }
+
+        .nav-links a:hover::before {
+            left: 100%;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-links a.active {
+            background: linear-gradient(45deg, var(--success), var(--primary-light));
+            box-shadow: 0 4px 15px rgba(76, 201, 240, 0.4);
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem 0;
+        }
+
+        .hero {
+            background: white;
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transform: translateY(0);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: -100px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(var(--primary-light), transparent 70%);
+            opacity: 0.3;
+            border-radius: 50%;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            right: -100px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(var(--accent-light), transparent 70%);
+            opacity: 0.3;
+            border-radius: 50%;
+        }
+
+        .hero:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(120deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradientShift 8s ease infinite;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray-600);
+            max-width: 800px;
+            margin: 0 auto 1.5rem;
+            line-height: 1.8;
+        }
+
+        /* Dashboard Layout */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            perspective: 1000px;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            transform-style: preserve-3d;
+            transform: rotateX(0deg) rotateY(0deg);
+            position: relative;
+            z-index: 1;
+        }
+
+        .upload-section:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transform: rotateX(2deg) rotateY(1deg);
+        }
+
+        .upload-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.8rem;
+            color: var(--primary);
+            display: inline-block;
+            position: relative;
+        }
+
+        .upload-section h2::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            bottom: -8px;
+            left: 0;
+            background: linear-gradient(to right, var(--primary), transparent);
+            border-radius: 2px;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--gray-300);
+            border-radius: 16px;
+            padding: 3.5rem 2rem;
+            text-align: center;
+            transition: all 0.5s ease;
+            cursor: pointer;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            background: var(--gray-100);
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary);
+            background: rgba(67, 97, 238, 0.05);
+            transform: translateY(-5px);
+        }
+
+        .upload-area i {
+            font-size: 5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            transition: all 0.5s ease;
+        }
+
+        .upload-area:hover i {
+            transform: translateY(-10px) scale(1.1);
+            color: var(--secondary);
+        }
+
+        .upload-area h3 {
+            margin-bottom: 0.8rem;
+            font-size: 1.4rem;
+            color: var(--gray-700);
+            transition: all 0.3s ease;
+        }
+
+        .upload-area:hover h3 {
+            color: var(--primary);
+        }
+
+        .upload-area p {
+            color: var(--gray-600);
+            margin-bottom: 1.5rem;
+        }
+
+        .upload-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.9rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .upload-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            transition: all 0.5s ease;
+            z-index: -1;
+            border-radius: 50px;
+        }
+
+        .upload-btn:hover::before {
+            width: 100%;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4);
+        }
+
+        .file-input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .upload-preview {
+            padding: 2rem;
+            background: var(--gray-100);
+            border-radius: 16px;
+            margin-top: 2rem;
+            transition: all 0.5s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05) inset;
+            animation: fadeInUp 0.8s forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .preview-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            border-radius: 12px;
+            min-height: 300px;
+            max-height: 400px;
+            background: var(--gray-200);
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .preview-container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s ease;
+            filter: brightness(1) contrast(1);
+        }
+
+        .image-controls {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .image-controls button {
+            padding: 0.75rem 1.25rem;
+            border: none;
+            border-radius: 50px;
+            background: white;
+            color: var(--primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            transition: all 0.4s ease;
+            font-weight: 500;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .image-controls button::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background: var(--primary);
+            transition: all 0.4s ease;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .image-controls button:hover::before {
+            width: 100%;
+        }
+
+        .image-controls button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            color: var(--primary-dark);
+        }
+
+        .image-controls button i {
+            transition: all 0.4s ease;
+        }
+
+        .image-controls button:hover i {
+            transform: rotate(15deg);
+        }
+
+        .image-controls button.analyze {
+            background: linear-gradient(45deg, var(--success), var(--primary-light));
+            color: white;
+            box-shadow: 0 5px 15px rgba(76, 201, 240, 0.3);
+        }
+
+        .image-controls button.analyze::before {
+            background: white;
+            opacity: 0.2;
+        }
+
+        .image-controls button.analyze:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(76, 201, 240, 0.4);
+        }
+
+        .image-controls button.analyze i {
+            animation: pulse 2s infinite;
+        }
+
+        .image-gallery {
+            margin-top: 2.5rem;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .gallery-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+        }
+
+        .gallery-title h3 {
+            color: var(--primary);
+            font-size: 1.3rem;
+            position: relative;
+            padding-left: 12px;
+        }
+
+        .gallery-title h3::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 70%;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .gallery-title a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+        }
+
+        .gallery-title a:hover {
+            background: rgba(67, 97, 238, 0.1);
+            transform: translateX(3px);
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+        }
+
+        .image-item {
+            height: 90px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-item:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            z-index: 2;
+        }
+
+        .image-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+
+        .image-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .image-item .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding-bottom: 10px;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .image-item:hover .overlay {
+            opacity: 1;
+        }
+
+        .image-item .overlay i {
+            color: white;
+            font-size: 1.2rem;
+            background: rgba(255, 255, 255, 0.2);
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            transform: translateY(20px);
+        }
+
+        .image-item:hover .overlay i {
+            transform: translateY(0);
+        }
+
+        .image-item .overlay i:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.1);
+        }
+
+        /* Chat Section */
+        .chat-section {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+            transition: all 0.5s ease;
+            transform: translateZ(0);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .chat-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(var(--primary-light), transparent 70%);
+            opacity: 0.1;
+            border-radius: 0 0 0 100%;
+            z-index: 0;
+        }
+
+        .chat-section:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            transform: translateZ(20px);
+        }
+
+        .chat-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+            background: white;
+        }
+
+        .chat-header h2 {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin: 0;
+            position: relative;
+        }
+
+        .chat-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40%;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary), transparent);
+        }
+
+        .chat-header .status {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-size: 0.9rem;
+            color: var(--gray-600);
+            background: var(--gray-100);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .chat-header .status:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--success);
+            position: relative;
+        }
+
+        .status-indicator::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 18px;
+            height: 18px;
+            background: var(--success);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: pulse 1.5s infinite;
+        }
+
+        .chat-body {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            background: var(--gray-100);
+            position: relative;
+            scroll-behavior: smooth;
+        }
+
+        .chat-body::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), 
+                        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+        }
+
+        .message {
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 12px;
+            max-width: 85%;
+            opacity: 0;
+            animation: fadeInMessage 0.5s ease forwards;
+        }
+
+        @keyframes fadeInMessage {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user-message {
+            margin-left: auto;
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1rem;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .message-avatar:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .user-message .message-avatar {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 12px 12px 12px 3px;
+        }
+
+        .bot-message .message-avatar {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            border-radius: 12px 12px 3px 12px;
+        }
+
+        .message-avatar i {
+            transition: all 0.3s ease;
+        }
+
+        .message-avatar:hover i {
+            transform: scale(1.2);
+        }
+
+        .message-content {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 18px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--gray-700);
+            border-top-left-radius: 4px;
+        }
+
+        .message-content:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .user-message .message-content {
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            color: white;
+            border-top-right-radius: 4px;
+            border-top-left-radius: 18px;
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            margin-top: 6px;
+            text-align: right;
+        }
+
+        .user-message .message-time {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .chat-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--gray-200);
+            background: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 25px;
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: var(--font-main);
+            font-size: 0.95rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+            color: var(--gray-700);
+        }
+
+        .chat-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .chat-input::placeholder {
+            color: var(--gray-500);
+            transition: all 0.3s ease;
+        }
+
+        .chat-input:focus::placeholder {
+            opacity: 0.7;
+            transform: translateX(5px);
+        }
+
+        .send-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .send-btn::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            top: -100%;
+            left: 0;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            transform: scale(0);
+        }
+
+        .send-btn:hover::before {
+            top: 0;
+            transform: scale(1);
+        }
+
+        .send-btn:hover {
+            transform: translateY(-3px) rotate(90deg);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.4);
+        }
+
+        .send-btn i {
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        /* Analysis Results Section */
+        .analysis-results {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-top: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            display: none;
+        }
+
+        .analysis-results::before,
+        .analysis-results::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(var(--primary-light), transparent 70%);
+            opacity: 0.05;
+            z-index: 0;
+        }
+
+        .analysis-results::before {
+            top: -100px;
+            left: -100px;
+        }
+
+        .analysis-results::after {
+            bottom: -100px;
+            right: -100px;
+            background: radial-gradient(var(--accent-light), transparent 70%);
+        }
+
+        .analysis-results:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .results-header h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .results-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 3px;
+        }
+
+        .results-header .actions .btn {
+            padding: 0.8rem 1.5rem;
+            background: white;
+            color: var(--primary);
+            border: 1px solid var(--gray-300);
+            border-radius: 25px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .results-header .actions .btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.25);
+        }
+
+        .results-header .actions .btn i {
+            transition: all 0.3s ease;
+        }
+
+        .results-header .actions .btn:hover i {
+            transform: translateY(-2px);
+        }
+
+        .results-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .result-card {
+            background: var(--gray-100);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .result-card::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), 
+                        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .result-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-card h3 {
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.4rem;
+        }
+
+        .result-card h3 i {
+            color: var(--success);
+            background: rgba(76, 201, 240, 0.15);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .result-card:hover h3 i {
+            transform: rotate(15deg) scale(1.1);
+            background: var(--success);
+            color: white;
+        }
+
+        .confidence-bar {
+            height: 10px;
+            background: var(--gray-300);
+            border-radius: 5px;
+            margin-bottom: 0.8rem;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05) inset;
+        }
+
+        .confidence-level {
+            height: 100%;
+            background: linear-gradient(to right, var(--success), var(--primary));
+            border-radius: 5px;
+            width: 85%;
+            position: relative;
+            overflow: hidden;
+            animation: fillBar 1.5s ease-out forwards;
+            transform-origin: left;
+        }
+
+        @keyframes fillBar {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
+        }
+
+        .confidence-level::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 30px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: skewX(-20deg) translateX(-30px);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            100% { transform: skewX(-20deg) translateX(calc(100% + 30px)); }
+        }
+
+        .confidence-value {
+            text-align: right;
+            font-size: 0.9rem;
+            color: var(--gray-600);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .result-card:hover .confidence-value {
+            color: var(--primary);
+        }
+
+        .detail-list {
+            margin-top: 1.5rem;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
+        }
+
+        .detail-item:hover {
+            padding-left: 8px;
+            background: rgba(67, 97, 238, 0.03);
+            border-color: var(--primary-light);
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: var(--gray-600);
+            transition: all 0.3s ease;
+        }
+
+        .detail-item:hover .detail-label {
+            color: var(--primary);
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: var(--gray-800);
+            transition: all 0.3s ease;
+        }
+
+        .detail-item:hover .detail-value {
+            transform: scale(1.05);
+        }
+
+        .result-card .btn {
+            margin-top: 1.5rem;
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.2);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .result-card .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: var(--primary-dark);
+            transition: all 0.5s ease;
+            z-index: -1;
+            border-radius: 25px;
+        }
+
+        .result-card .btn:hover::before {
+            width: 100%;
+        }
+
+        .result-card .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.3);
+        }
+
+        /* Loading Animation */
+        .loader {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .slide-in-right {
+            animation: slideInRight 0.5s ease forwards;
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .toast {
+            background: white;
+            color: var(--gray-700);
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            max-width: 350px;
+            animation: toastSlideIn 0.5s ease forwards;
+            transform: translateX(100%);
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        @keyframes toastSlideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--warning);
+        }
+
+        .toast i {
+            font-size: 1.5rem;
+        }
+
+        .toast.success i {
+            color: var(--success);
+        }
+
+        .toast.error i {
+            color: var(--warning);
+        }
+
+        .toast::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: var(--gray-300);
+            animation: progressBar 3s linear forwards;
+        }
+
+        @keyframes progressBar {
+            from { width: 100%; }
+            to { width: 0%; }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .chat-section {
+                height: 500px;
+                margin-top: 1.5rem;
+            }
+            
+            .results-body {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                background: none;
+                border: none;
+                color: white;
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .upload-area {
+                padding: 2rem 1rem;
+            }
+
+            .upload-area i {
+                font-size: 3.5rem;
+            }
+
+            .image-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .results-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .upload-section,
+            .chat-section,
+            .analysis-results {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Additional Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .float {
+            animation: float 5s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .breathe {
+            animation: breathe 3s ease-in-out infinite;
+        }
+
+        /* Wave Animation for Hero */
+        .wave-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25' fill='%234361ee'%3E%3C/path%3E%3Cpath d='M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z' opacity='.5' fill='%234361ee'%3E%3C/path%3E%3Cpath d='M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z' fill='%234361ee'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: repeat-x;
+            animation: wave 25s linear infinite;
+            opacity: 0.05;
+            z-index: 1;
+        }
+
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+
+        /* Particles background */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: var(--primary);
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--gray-100);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gray-400);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-light);
+        }
+
+        /* Previous styles remain the same */
+        
+        /* Additional styles for typing indicator */
+        .typing-indicator {
+            display: flex;
+            gap: 5px;
+            padding: 5px 0;
+        }
+        .typing-indicator .dot {
+            width: 8px;
+            height: 8px;
+            background: #ccc;
+            border-radius: 50%;
+            display: inline-block;
+            animation: typingBounce 1.3s linear infinite;
+        }
+        .typing-indicator .dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .typing-indicator .dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes typingBounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-6px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toastContainer">
+        <!-- Toasts will be dynamically added here -->
+    </div>
+
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="navbar">
+                <div class="logo">
+                    <i class="fas fa-brain"></i>
+                    <span>NeuroAI Diagnostic</span>
+                </div>
+                <nav class="nav-links">
+                    <a href="#" class="active">Dashboard</a>
+                    <a href="#">History</a>
+                    <a href="#">Resources</a>
+                    <a href="#">Settings</a>
+                </nav>
+                <button class="mobile-menu-btn" style="display: none;">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="particles" id="particles"></div>
+                <h1 class="animate__animated animate__fadeIn">Advanced Neurological Diagnostic Platform</h1>
+                <p class="animate__animated animate__fadeIn animate__delay-1s">Upload your brain scans, X-rays, or other neurological imaging for instant AI-powered analysis and personalized insights. Our cutting-edge technology provides accurate diagnostics to assist healthcare professionals.</p>
+                <div class="wave-container">
+                    <div class="wave"></div>
+                </div>
+            </section>
+
+            <!-- Dashboard Layout -->
+            <div class="dashboard">
+                <!-- Upload Section -->
+                <section class="upload-section animate__animated animate__fadeInLeft">
+                    <h2>Upload Medical Imaging</h2>
+                    <div class="upload-area breathe" id="dropArea">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h3>Drag & Drop Your Files</h3>
+                        <p>Supported formats: JPG, PNG, DICOM, NIFTI (max 20MB)</p>
+                        <a href="#" class="upload-btn">Browse Files</a>
+                        <input type="file" class="file-input" id="fileInput" accept="image/*">
+                        <div class="loader" id="uploadLoader"></div>
+                    </div>
+
+                    <!-- Hidden until an image is uploaded -->
+                    <div class="upload-preview" id="previewSection" style="display: none;">
+                        <div class="preview-container">
+                            <img src="/api/placeholder/400/320" alt="Preview" class="preview-image" id="previewImage">
+                            <div class="loader" id="analysisLoader"></div>
+                        </div>
+                        <div class="image-controls">
+                            <button><i class="fas fa-rotate"></i> Rotate</button>
+                            <button><i class="fas fa-expand"></i> Zoom</button>
+                            <button><i class="fas fa-adjust"></i> Contrast</button>
+                            <button class="analyze" id="analyzeBtn"><i class="fas fa-brain"></i> Analyze Scan</button>
+                        </div>
+                    </div>
+
+                    <div class="image-gallery">
+                        <div class="gallery-title">
+                            <h3>Recent Uploads</h3>
+                            <a href="#">View All</a>
+                        </div>
+                        <div class="image-grid">
+                            <div class="image-item">
+                                <img src="/api/placeholder/120/80" alt="Brain Scan">
+                                <div class="overlay">
+                                    <i class="fas fa-eye"></i>
+                                </div>
+                            </div>
+                            <div class="image-item">
+                                <img src="/api/placeholder/120/80" alt="X-Ray">
+                                <div class="overlay">
+                                    <i class="fas fa-eye"></i>
+                                </div>
+                            </div>
+                            <div class="image-item">
+                                <img src="/api/placeholder/120/80" alt="MRI Scan">
+                                <div class="overlay">
+                                    <i class="fas fa-eye"></i>
+                                </div>
+                            </div>
+                            <div class="image-item">
+                                <img src="/api/placeholder/120/80" alt="CT Scan">
+                                <div class="overlay">
+                                    <i class="fas fa-eye"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Chat Section -->
+                <section class="chat-section animate__animated animate__fadeInRight">
+                    <div class="chat-header">
+                        <h2>Diagnostic Assistant</h2>
+                        <div class="status">
+                            <div class="status-indicator"></div>
+                            <span>Online</span>
+                        </div>
+                    </div>
+                    <div class="chat-body" id="chatBody">
+                        <div class="message bot-message">
+                            <div class="message-avatar">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="message-content">
+                                Hello! I'm your NeuroAI assistant. Upload a neurological scan, and I'll help analyze it for you. Feel free to ask me any questions about the process.
+                                <div class="message-time">10:30 AM</div>
+                            </div>
+                        </div>
+                        <div class="message user-message">
+                            <div class="message-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="message-content">
+                                I've just uploaded an MRI scan of my brain. Can you tell me what you're looking for?
+                                <div class="message-time">10:31 AM</div>
+                            </div>
+                        </div>
+                        <div class="message bot-message">
+                            <div class="message-avatar">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="message-content">
+                                I'll be analyzing your MRI for any structural abnormalities, signs of inflammation, tissue damage, and other neurological indicators. The AI model is trained to detect patterns associated with various conditions including tumors, lesions, atrophy, and vascular issues. Would you like me to focus on anything specific?
+                                <div class="message-time">10:32 AM</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-footer">
+                        <div class="chat-input-container">
+                            <input type="text" class="chat-input" id="chatInput" placeholder="Type your message here...">
+                            <button class="send-btn" id="sendBtn">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Analysis Results Section (Hidden initially) -->
+            <section class="analysis-results" id="analysisResults">
+                <div class="results-header">
+                    <h2>Diagnostic Analysis</h2>
+                    <div class="actions">
+                        <button class="btn"><i class="fas fa-download"></i> Export Report</button>
+                    </div>
+                </div>
+                <div class="results-body">
+                    <div class="result-card">
+                        <h3><i class="fas fa-chart-pie"></i> Primary Findings</h3>
+                        <div class="confidence-bar">
+                            <div class="confidence-level"></div>
+                        </div>
+                        <div class="confidence-value">Confidence: 85%</div>
+                        <div class="detail-list">
+                            <div class="detail-item">
+                                <span class="detail-label">Analysis Type:</span>
+                                <span class="detail-value">Structural Assessment</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Region:</span>
+                                <span class="detail-value">Temporal Lobe</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Observation:</span>
+                                <span class="detail-value">No significant abnormalities</span>
+                            </div>
+                        </div>
+                        <a href="#" class="btn">View Details</a>
+                    </div>
+                    <div class="result-card">
+                        <h3><i class="fas fa-brain"></i> Neural Activity</h3>
+                        <div class="confidence-bar">
+                            <div class="confidence-level" style="width: 78%"></div>
+                        </div>
+                        <div class="confidence-value">Confidence: 78%</div>
+                        <div class="detail-list">
+                            <div class="detail-item">
+                                <span class="detail-label">Analysis Type:</span>
+                                <span class="detail-value">Functional Assessment</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Region:</span>
+                                <span class="detail-value">Frontal Cortex</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Observation:</span>
+                                <span class="detail-value">Normal activity patterns</span>
+                            </div>
+                        </div>
+                        <a href="#" class="btn">View Details</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <script>
+    // Configuration
+    const GEMINI_API_KEY = 'AIzaSyD0Vr-dyzK-n843c8cmD9ptSmVzbZIbxcY'; // Replace with your actual API key
+    const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=${GEMINI_API_KEY}`;
+    
+    // System prompt for Gemini
+    const SYSTEM_PROMPT = `You are NeuroAI, an expert AI assistant specialized in neurological diagnostics, 
+    particularly focused on brain cancer and related conditions. Your knowledge includes:
+    
+    - All types of brain tumors (gliomas, meningiomas, pituitary adenomas, etc.)
+    - Neurological symptoms and their clinical significance
+    - Diagnostic imaging interpretation (MRI, CT, PET scans)
+    - Treatment options and their efficacy
+    - Prognostic factors and recovery expectations
+    - Preventive measures and lifestyle recommendations
+    
+    You provide accurate, evidence-based information while maintaining a compassionate tone. 
+    Always clarify that your advice should be reviewed by a healthcare professional. 
+    For imaging analysis, wait for the user to upload scans before providing specific insights.`;
+
+    // DOM Elements
+    const fileInput = document.getElementById('fileInput');
+    const dropArea = document.getElementById('dropArea');
+    const previewSection = document.getElementById('previewSection');
+    const previewImage = document.getElementById('previewImage');
+    const uploadLoader = document.getElementById('uploadLoader');
+    const analysisLoader = document.getElementById('analysisLoader');
+    const analyzeBtn = document.getElementById('analyzeBtn');
+    const analysisResults = document.getElementById('analysisResults');
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const chatBody = document.getElementById('chatBody');
+    const toastContainer = document.getElementById('toastContainer');
+    
+    // Chat history for context
+    let chatHistory = [
+        {
+            role: "user",
+            parts: [{ text: SYSTEM_PROMPT }]
+        },
+        {
+            role: "model",
+            parts: [{ text: "Understood. I am now operating as NeuroAI, your specialized neurological diagnostic assistant. How can I help you today with any brain health concerns or scan analyses?" }]
+        }
+    ];
+
+    // Initialize the platform
+    document.addEventListener('DOMContentLoaded', () => {
+        createParticles();
+        showWelcomeMessage();
+        setupEventListeners();
+    });
+
+    function showWelcomeMessage() {
+        setTimeout(() => {
+            showToast('Welcome to NeuroAI Diagnostic Platform!', 'success');
+            addBotMessage("Hello! I'm your NeuroAI assistant, specialized in neurological diagnostics. You can upload brain scans for analysis or ask me any questions about brain health, conditions, or treatments.");
+        }, 1000);
+    }
+
+    function setupEventListeners() {
+        // File Upload Handling
+        fileInput.addEventListener('change', handleFileSelect);
+        dropArea.addEventListener('click', () => fileInput.click());
+        
+        dropArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropArea.style.borderColor = '#4361ee';
+            dropArea.style.background = 'rgba(67, 97, 238, 0.05)';
+            dropArea.style.transform = 'scale(1.03)';
+        });
+        
+        dropArea.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            dropArea.style.borderColor = '#ddd';
+            dropArea.style.background = 'var(--gray-100)';
+            dropArea.style.transform = 'scale(1)';
+        });
+        
+        dropArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropArea.style.borderColor = '#ddd';
+            dropArea.style.background = 'var(--gray-100)';
+            dropArea.style.transform = 'scale(1)';
+            
+            if (e.dataTransfer.files.length) {
+                fileInput.files = e.dataTransfer.files;
+                handleFileSelect(e);
+            }
+        });
+        
+        // Analysis Button Handling
+        analyzeBtn.addEventListener('click', analyzeScan);
+        
+        // Chat Functionality
+        sendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    }
+
+    function handleFileSelect(e) {
+        const file = fileInput.files[0];
+        if (!file) return;
+        
+        // Check file type and size
+        const validTypes = ['image/jpeg', 'image/png', 'image/dicom'];
+        const maxSize = 20 * 1024 * 1024; // 20MB
+        
+        if (!validTypes.includes(file.type)) {
+            showToast('Unsupported file format. Please upload JPG, PNG, or DICOM files.', 'error');
+            return;
+        }
+        
+        if (file.size > maxSize) {
+            showToast('File size exceeds 20MB limit.', 'error');
+            return;
+        }
+        
+        // Show loading indicator
+        uploadLoader.style.display = 'block';
+        
+        // Simulate upload delay
+        setTimeout(() => {
+            // Create file URL and display preview
+            const fileURL = URL.createObjectURL(file);
+            previewImage.src = fileURL;
+            previewSection.style.display = 'block';
+            uploadLoader.style.display = 'none';
+            
+            // Add animation class to preview section
+            previewSection.classList.add('animate__animated', 'animate__fadeInUp');
+            
+            // Add success message
+            showToast('File uploaded successfully!', 'success');
+            
+            // Add bot message about the upload
+            addBotMessage('I see you\'ve uploaded a new scan. Would you like me to analyze it? Click the "Analyze Scan" button when you\'re ready.');
+        }, 1500);
+    }
+    
+    async function analyzeScan() {
+        // Show loading indicator
+        analysisLoader.style.display = 'block';
+        analyzeBtn.disabled = true;
+        analyzeBtn.style.opacity = '0.7';
+        
+        try {
+            // In a real implementation, you would send the image to your backend for analysis
+            // For this demo, we'll simulate the analysis process
+            
+            // Simulate analysis delay
+            await new Promise(resolve => setTimeout(resolve, 3000));
+            
+            analysisLoader.style.display = 'none';
+            analysisResults.style.display = 'block';
+            analysisResults.classList.add('animate__animated', 'animate__fadeInUp');
+            
+            // Re-enable analyze button
+            analyzeBtn.disabled = false;
+            analyzeBtn.style.opacity = '1';
+            
+            // Get analysis explanation from Gemini
+            const analysisPrompt = `A user has uploaded a brain scan for analysis. Based on your expertise in neurological diagnostics, provide a professional analysis of what the scan might show, focusing on:
+            
+            1. Any visible abnormalities or areas of concern
+            2. Potential conditions that might be indicated
+            3. Recommended next steps for the patient
+            
+            Maintain a professional yet compassionate tone. If you can't see the actual image (as this is a text interface), provide general guidance about what the analysis process would involve.`;
+            
+            const response = await getGeminiResponse(analysisPrompt);
+            addBotMessage(response);
+            
+            // Show success message
+            showToast('Analysis complete! Results are now available.', 'success');
+            
+            // Scroll to results
+            setTimeout(() => {
+                analysisResults.scrollIntoView({ behavior: 'smooth' });
+            }, 500);
+        } catch (error) {
+            console.error('Analysis error:', error);
+            showToast('Analysis failed. Please try again.', 'error');
+            analysisLoader.style.display = 'none';
+            analyzeBtn.disabled = false;
+            analyzeBtn.style.opacity = '1';
+        }
+    }
+    
+    async function sendMessage() {
+        const message = chatInput.value.trim();
+        if (!message) return;
+        
+        // Add user message to chat
+        addUserMessage(message);
+        
+        // Add to chat history
+        chatHistory.push({
+            role: "user",
+            parts: [{ text: message }]
+        });
+        
+        // Clear input
+        chatInput.value = '';
+        
+        // Show typing indicator
+        showTypingIndicator();
+        
+        try {
+            // Get response from Gemini
+            const response = await getGeminiResponse(message);
+            
+            // Remove typing indicator
+            removeTypingIndicator();
+            
+            // Add bot response
+            addBotMessage(response);
+            
+            // Add to chat history
+            chatHistory.push({
+                role: "model",
+                parts: [{ text: response }]
+            });
+        } catch (error) {
+            console.error('Chat error:', error);
+            removeTypingIndicator();
+            showToast('Failed to get response. Please try again.', 'error');
+        }
+    }
+    
+    async function getGeminiResponse(prompt) {
+        try {
+            const response = await fetch(GEMINI_API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    contents: chatHistory.concat([{
+                        role: "user",
+                        parts: [{ text: prompt }]
+                    }])
+                })
+            });
+            
+            if (!response.ok) {
+                throw new Error(`API request failed with status ${response.status}`);
+            }
+            
+            const data = await response.json();
+            return data.candidates[0].content.parts[0].text;
+        } catch (error) {
+            console.error('Gemini API error:', error);
+            throw error;
+        }
+    }
+    
+    function showTypingIndicator() {
+        const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        
+        const typingHTML = `
+            <div class="message bot-message" id="typing-indicator">
+                <div class="message-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="message-content">
+                    <div class="typing-indicator">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                    <div class="message-time">${time}</div>
+                </div>
+            </div>
+        `;
+        
+        chatBody.insertAdjacentHTML('beforeend', typingHTML);
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+    
+    function removeTypingIndicator() {
+        const typingIndicator = document.getElementById('typing-indicator');
+        if (typingIndicator) {
+            typingIndicator.remove();
+        }
+    }
+    
+    function addUserMessage(text) {
+        const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        
+        const messageHTML = `
+            <div class="message user-message animate__animated animate__fadeInRight">
+                <div class="message-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="message-content">
+                    ${text}
+                    <div class="message-time">${time}</div>
+                </div>
+            </div>
+        `;
+        
+        chatBody.insertAdjacentHTML('beforeend', messageHTML);
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+    
+    function addBotMessage(text) {
+        const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        
+        const messageHTML = `
+            <div class="message bot-message animate__animated animate__fadeInLeft">
+                <div class="message-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="message-content">
+                    ${text}
+                    <div class="message-time">${time}</div>
+                </div>
+            </div>
+        `;
+        
+        chatBody.insertAdjacentHTML('beforeend', messageHTML);
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+    
+    // Toast Notification System
+    function showToast(message, type = 'success') {
+        const toast = document.createElement('div');
+        toast.className = `toast ${type} animate__animated animate__fadeInRight`;
+        
+        const icon = type === 'success' ? 'check-circle' : 'exclamation-triangle';
+        
+        toast.innerHTML = `
+            <i class="fas fa-${icon}"></i>
+            <span>${message}</span>
+        `;
+        
+        toastContainer.appendChild(toast);
+        
+        // Add progress bar animation
+        toast.style.position = 'relative';
+        const progressBar = document.createElement('div');
+        progressBar.style.position = 'absolute';
+        progressBar.style.bottom = '0';
+        progressBar.style.left = '0';
+        progressBar.style.height = '3px';
+        progressBar.style.width = '100%';
+        progressBar.style.background = type === 'success' ? 'var(--success)' : 'var(--warning)';
+        progressBar.style.transition = 'width 3s linear';
+        toast.appendChild(progressBar);
+        
+        // Trigger reflow to make animation work
+        void toast.offsetWidth;
+        
+        // Start progress bar animation
+        setTimeout(() => {
+            progressBar.style.width = '0';
+        }, 100);
+        
+        // Auto remove after 3 seconds
+        setTimeout(() => {
+            toast.classList.remove('animate__fadeInRight');
+            toast.classList.add('animate__fadeOutRight');
+            
+            setTimeout(() => {
+                toastContainer.removeChild(toast);
+            }, 500);
+        }, 3000);
+    }
+    
+    // Create particles (same as before)
+    function createParticles() {
+        const particles = document.getElementById('particles');
+        if (!particles) return;
+        
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.opacity = Math.random() * 0.3;
+            particle.style.width = Math.random() * 6 + 2 + 'px';
+            particle.style.height = particle.style.width;
+            
+            // Animation
+            particle.style.animation = `float ${Math.random() * 5 + 3}s ease-in-out infinite`;
+            particle.style.animationDelay = Math.random() * 5 + 's';
+            
+            particles.appendChild(particle);
+        }
+    }
+</script>
+</body>
+</html>
